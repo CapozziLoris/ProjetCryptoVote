@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Vote</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #signup, #vote { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Système de Vote</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="navLinks">
+                    <li class="nav-item" id="navLogin">
+                        <a class="nav-link" href="#" id="showLogin">Connexion</a>
+                    </li>
+                    <li class="nav-item" id="navSignup">
+                        <a class="nav-link" href="#" id="showSignup">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <!-- Login Section -->
+        <section id="login" class="my-5">
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Adresse Email</label>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="Entrez votre email">
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Mot de Passe</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Entrez votre mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+        </section>
+
+        <!-- Signup Section -->
+        <section id="signup" class="my-5">
+            <h2>Inscription</h2>
+            <form id="signupForm">
+                <div class="mb-3">
+                    <label for="signupName" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="signupName" placeholder="Entrez votre nom">
+                </div>
+                <div class="mb-3">
+                    <label for="signupEmail" class="form-label">Adresse Email</label>
+                    <input type="email" class="form-control" id="signupEmail" placeholder="Entrez votre email">
+                </div>
+                <div class="mb-3">
+                    <label for="signupPassword" class="form-label">Mot de Passe</label>
+                    <input type="password" class="form-control" id="signupPassword" placeholder="Entrez un mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </form>
+        </section>
+
+        <!-- Voting Section -->
+        <section id="vote" class="my-5">
+            <h2>Votez pour un candidat</h2>
+            <form id="voteForm">
+                <div class="mb-3">
+                    <label for="candidateSelect" class="form-label">Choisissez un candidat</label>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Candidat 1</h5>
+                                    <input type="radio" name="candidate" value="1" id="candidate1">
+                                    <label for="candidate1">Sélectionner</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Candidat 2</h5>
+                                    <input type="radio" name="candidate" value="2" id="candidate2">
+                                    <label for="candidate2">Sélectionner</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Candidat 3</h5>
+                                    <input type="radio" name="candidate" value="3" id="candidate3">
+                                    <label for="candidate3">Sélectionner</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Valider mon vote</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const loginSection = document.getElementById('login');
+        const signupSection = document.getElementById('signup');
+        const voteSection = document.getElementById('vote');
+        const navLinks = document.getElementById('navLinks');
+        const navLogin = document.getElementById('navLogin');
+        const navSignup = document.getElementById('navSignup');
+        let isAuthenticated = false;
+
+        document.getElementById('showLogin').addEventListener('click', () => {
+            loginSection.style.display = 'block';
+            signupSection.style.display = 'none';
+            voteSection.style.display = 'none';
+        });
+
+        document.getElementById('showSignup').addEventListener('click', () => {
+            signupSection.style.display = 'block';
+            loginSection.style.display = 'none';
+            voteSection.style.display = 'none';
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            isAuthenticated = true; // Simulate authentication
+            alert('Connexion réussie !');
+            loginSection.style.display = 'none';
+            voteSection.style.display = 'block';
+
+            // Update navbar
+            navLogin.style.display = 'none';
+            navSignup.style.display = 'none';
+            const logoutLink = document.createElement('li');
+            logoutLink.classList.add('nav-item');
+            logoutLink.innerHTML = '<a class="nav-link" href="#" id="logout">Déconnexion</a>';
+            navLinks.appendChild(logoutLink);
+
+            document.getElementById('logout').addEventListener('click', () => {
+                isAuthenticated = false;
+                alert('Vous êtes déconnecté.');
+                location.reload();
+            });
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+            signupSection.style.display = 'none';
+            loginSection.style.display = 'block';
+        });
+
+        document.getElementById('voteForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const selectedCandidate = document.querySelector('input[name="candidate"]:checked');
+            if (!selectedCandidate) {
+                alert('Veuillez sélectionner un candidat avant de voter.');
+                return;
+            }
+
+            const confirmVote = confirm(`Vous êtes sur le point de voter pour le candidat ${selectedCandidate.value}. Confirmez-vous ce choix ?`);
+            if (confirmVote) {
+                alert('Votre vote a été enregistré avec succès. Merci pour votre participation !');
+                document.getElementById('voteForm').reset(); // Optionnel : Réinitialiser le formulaire
+            }       
+    });
+</script>
+</body>
+</html>
+
