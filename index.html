@@ -45,6 +45,7 @@
                     <label for="loginPassword" class="form-label">Mot de Passe</label>
                     <input type="password" class="form-control" id="loginPassword" placeholder="Entrez votre mot de passe">
                 </div>
+                <div id="loginMessage" class="mt-3"></div> <!-- Message de connexion -->
                 <button type="submit" class="btn btn-primary">Se connecter</button>
             </form>
         </section>
@@ -65,6 +66,7 @@
                     <label for="signupPassword" class="form-label">Mot de Passe</label>
                     <input type="password" class="form-control" id="signupPassword" placeholder="Entrez un mot de passe">
                 </div>
+                <div id="signupMessage" class="mt-3"></div> <!-- Message d'inscription -->
                 <button type="submit" class="btn btn-primary">S'inscrire</button>
             </form>
         </section>
@@ -75,44 +77,18 @@
             <form id="voteForm">
                 <div class="mb-3">
                     <label for="candidateSelect" class="form-label">Choisissez un candidat</label>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 1">
-                                <div class="card-body">
-                                    <h5 class="card-title">Candidat 1</h5>
-                                    <input type="radio" name="candidate" value="1" id="candidate1">
-                                    <label for="candidate1">Sélectionner</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 2">
-                                <div class="card-body">
-                                    <h5 class="card-title">Candidat 2</h5>
-                                    <input type="radio" name="candidate" value="2" id="candidate2">
-                                    <label for="candidate2">Sélectionner</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Candidat 3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Candidat 3</h5>
-                                    <input type="radio" name="candidate" value="3" id="candidate3">
-                                    <label for="candidate3">Sélectionner</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <select class="form-select" id="candidateSelect">
+                        <option value="1">Candidat 1</option>
+                        <option value="2">Candidat 2</option>
+                        <option value="3">Candidat 3</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-success">Valider mon vote</button>
+                <button type="submit" class="btn btn-primary">Voter</button>
             </form>
         </section>
     </div>
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
-
