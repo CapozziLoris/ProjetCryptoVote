@@ -11,19 +11,18 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Système de Vote</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="navLinks">
-                    <li class="nav-item" id="navLogin">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
                         <a class="nav-link" href="#" id="showLogin">Connexion</a>
                     </li>
-                    <li class="nav-item" id="navSignup">
+                    <li class="nav-item">
                         <a class="nav-link" href="#" id="showSignup">Inscription</a>
                     </li>
                 </ul>
@@ -31,64 +30,52 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container mt-5">
-        <!-- Login Section -->
-        <section id="login" class="my-5">
+        <section id="login">
             <h2>Connexion</h2>
             <form id="loginForm">
                 <div class="mb-3">
-                    <label for="loginEmail" class="form-label">Adresse Email</label>
-                    <input type="email" class="form-control" id="loginEmail" placeholder="Entrez votre email">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="loginEmail" required>
                 </div>
                 <div class="mb-3">
                     <label for="loginPassword" class="form-label">Mot de Passe</label>
-                    <input type="password" class="form-control" id="loginPassword" placeholder="Entrez votre mot de passe">
+                    <input type="password" class="form-control" id="loginPassword" required>
                 </div>
-                <div id="loginMessage" class="mt-3"></div> <!-- Message de connexion -->
                 <button type="submit" class="btn btn-primary">Se connecter</button>
+                <div id="loginMessage" class="mt-3"></div>
             </form>
         </section>
 
-        <!-- Signup Section -->
-        <section id="signup" class="my-5">
+        <section id="signup">
             <h2>Inscription</h2>
             <form id="signupForm">
                 <div class="mb-3">
                     <label for="signupName" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="signupName" placeholder="Entrez votre nom">
+                    <input type="text" class="form-control" id="signupName" required>
                 </div>
                 <div class="mb-3">
-                    <label for="signupEmail" class="form-label">Adresse Email</label>
-                    <input type="email" class="form-control" id="signupEmail" placeholder="Entrez votre email">
+                    <label for="signupEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="signupEmail" required>
                 </div>
                 <div class="mb-3">
                     <label for="signupPassword" class="form-label">Mot de Passe</label>
-                    <input type="password" class="form-control" id="signupPassword" placeholder="Entrez un mot de passe">
+                    <input type="password" class="form-control" id="signupPassword" required>
                 </div>
-                <div id="signupMessage" class="mt-3"></div> <!-- Message d'inscription -->
                 <button type="submit" class="btn btn-primary">S'inscrire</button>
+                <div id="signupMessage" class="mt-3"></div>
             </form>
         </section>
 
-        <!-- Voting Section -->
-        <section id="vote" class="my-5">
-            <h2>Votez pour un candidat</h2>
+        <section id="vote">
+            <h2>Votez pour un utilisateur</h2>
             <form id="voteForm">
-                <div class="mb-3">
-                    <label for="candidateSelect" class="form-label">Choisissez un candidat</label>
-                    <select class="form-select" id="candidateSelect">
-                        <option value="1">Candidat 1</option>
-                        <option value="2">Candidat 2</option>
-                        <option value="3">Candidat 3</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Voter</button>
+                <div id="candidatesList" class="row"></div>
+                <button type="submit" class="btn btn-success mt-3">Valider mon vote</button>
+                <div id="voteMessage" class="mt-3"></div>
             </form>
         </section>
     </div>
-
-    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-// Configuration de la connexion à la base de données
 $host = 'localhost';
 $dbname = 'DBVote';
 $username = 'root';
@@ -13,62 +12,46 @@ try {
     exit();
 }
 
-// Lecture des données JSON depuis la requête
 $data = json_decode(file_get_contents('php://input'), true);
-
-if (!$data) {
-    echo json_encode(['success' => false, 'message' => 'Données JSON invalides']);
-    exit();
-}
-
-// Extraction des champs de la requête
-$action = $data['action'] ?? null;
-$name = $data['name'] ?? null;
-$email = $data['email'] ?? null;
-$password = $data['password'] ?? null;
+$action = $data['action'] ?? $_GET['action'] ?? null;
 
 if ($action === 'signup') {
-    // Vérification que les champs ne sont pas vides
-    if (empty($name) || empty($email) || empty($password)) {
-        echo json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
-        exit();
-    }
+    $name = $data['name'];
+    $email = $data['email'];
+    $password = $data['password'];
 
-    try {
-        // Insertion dans la table user
-        $stmt = $pdo->prepare("INSERT INTO user (name, email, password) VALUES (:name, :email, :password)");
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password); // Pas de hachage du mot de passe ici
-        $stmt->execute();
-
-        echo json_encode(['success' => true, 'message' => 'Inscription réussie']);
-    } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'inscription']);
-    }
+    $stmt = $pdo->prepare("INSERT INTO user (name, email, password) VALUES (?, ?, ?)");
+    $stmt->execute([$name, $email, $password]);
+    echo json_encode(['success' => true, 'message' => 'Inscription réussie']);
 } elseif ($action === 'login') {
-    // Vérification que les champs ne sont pas vides
-    if (empty($email) || empty($password)) {
-        echo json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
-        exit();
-    }
+    $email = $data['email'];
+    $password = $data['password'];
 
-    try {
-        // Vérification des informations de connexion
-        $stmt = $pdo->prepare("SELECT * FROM user WHERE email = :email AND password = :password");
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password); // Pas de hachage du mot de passe ici
-        $stmt->execute();
+    $stmt = $pdo->prepare("SELECT id FROM user WHERE email = ? AND password = ?");
+    $stmt->execute([$email, $password]);
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user) {
-            echo json_encode(['success' => true, 'message' => 'Connexion réussie']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Email ou mot de passe incorrect']);
-        }
-    } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Erreur lors de la connexion']);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user) {
+        echo json_encode(['success' => true, 'user_id' => $user['id'], 'message' => 'Connexion réussie']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Identifiants incorrects']);
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Action non reconnue']);
+} elseif ($action === 'get_candidates') {
+    $stmt = $pdo->query("SELECT * FROM candidates");
+    $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($candidates);
+} elseif ($action === 'vote') {
+    $userId = $data['user_id'];
+    $candidateId = $data['candidate_id'];
+
+    $stmt = $pdo->prepare("SELECT * FROM votes WHERE user_id = ?");
+    $stmt->execute([$userId]);
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['success' => false, 'message' => 'Vous avez déjà voté']);
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO votes (user_id, candidate_id) VALUES (?, ?)");
+        $stmt->execute([$userId, $candidateId]);
+        echo json_encode(['success' => true, 'message' => 'Votre vote a été enregistré']);
+    }
 }
