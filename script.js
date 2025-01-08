@@ -129,40 +129,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Soumission du vote
-    voteForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const selectedCandidate = document.querySelector('input[name="candidate"]:checked');
-
-        if (!selectedCandidate) {
-            voteMessage.innerHTML = `<div class="alert alert-danger">Veuillez sélectionner un candidat.</div>`;
-            return;
-        }
-
-        try {
-            const response = await fetch("index.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    action: "vote",
-                    user_id: currentUserId,
-                    candidate_id: selectedCandidate.value,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                voteMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-            } else {
-                voteMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-            }
-        } catch (error) {
-            voteMessage.innerHTML = `<div class="alert alert-danger">Erreur de communication avec le serveur</div>`;
-            console.error("Erreur :", error);
-        }
-    });
 });
